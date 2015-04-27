@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "09_Tests", "09_Tests", "{E7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlHelperExtended", "03_Services\HtmlHelperExtended\HtmlHelperExtended.csproj", "{282581F1-312C-427F-8FDB-B782BE5DEE69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlHelperExtended.Tests", "99_Tests\HtmlHelperExtended.Tests\HtmlHelperExtended.Tests.csproj", "{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{282581F1-312C-427F-8FDB-B782BE5DEE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{282581F1-312C-427F-8FDB-B782BE5DEE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{282581F1-312C-427F-8FDB-B782BE5DEE69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +45,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{553640CF-4552-409C-8F18-F071693DD713} = {E50B6729-D647-4B3A-93D6-73AB8F6F2C97}
 		{282581F1-312C-427F-8FDB-B782BE5DEE69} = {0B01BAB9-D564-42CF-9FCE-6E8FE03CFE76}
+		{5BBDEDBE-8A24-4CB7-9F8C-2EB77D02BA6A} = {E7C0225A-2433-4A8B-BDA2-D4A4B14BDF71}
 	EndGlobalSection
 EndGlobal
