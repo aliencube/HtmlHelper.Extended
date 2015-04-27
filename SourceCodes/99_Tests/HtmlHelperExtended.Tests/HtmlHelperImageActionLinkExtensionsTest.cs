@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace Aliencube.HtmlHelper.Extended.Tests
@@ -15,9 +13,7 @@ namespace Aliencube.HtmlHelper.Extended.Tests
         [SetUp]
         public void Init()
         {
-            var context = Substitute.For<ViewContext>();
-            var container = Substitute.For<IViewDataContainer>();
-            this._htmlHelper = new System.Web.Mvc.HtmlHelper(context, container);
+            this._htmlHelper = MvcHelper.GetHtmlHelper();
         }
 
         [TearDown]
@@ -27,26 +23,26 @@ namespace Aliencube.HtmlHelper.Extended.Tests
         }
 
         [Test]
-        [TestCase("http://google.com", "Action")]
-        [TestCase("http://google.com", "Action", "title=TestTitle")]
-        [TestCase("http://google.com", "Action", "title=TestTitle", "class=class1 class2")]
-        public void GivenSrcHrefAndAttributes_Should_ReturnHtmlTagString(string src, string href, string htmlAttributes, string imageAttributes)
+        [TestCase("http://google.com", "TestAction", null, null)]
+        [TestCase("http://google.com", "TestAction", "title=TestTitle", null)]
+        [TestCase("http://google.com", "TestAction", "title=TestTitle", "class=class1 class2")]
+        public void GivenSrcHrefAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, string htmlAttributes, string imageAttributes)
         {
             var hAttributes = new Dictionary<string, object>();
-            if (htmlAttributes != null)
+            if (!String.IsNullOrWhiteSpace(htmlAttributes))
             {
                 hAttributes.Add(htmlAttributes.Split('=')[0], htmlAttributes.Split('=')[1]);
             }
 
             var iAttributes = new Dictionary<string, object>();
-            if (imageAttributes != null)
+            if (!String.IsNullOrWhiteSpace(imageAttributes))
             {
                 iAttributes.Add(imageAttributes.Split('=')[0], imageAttributes.Split('=')[1]);
             }
-            var link = this._htmlHelper.ImageActionLink(src, href, hAttributes, iAttributes);
+            var link = this._htmlHelper.ImageActionLink(src, actionName, hAttributes, iAttributes);
 
             link.ToHtmlString().Should().Contain("><img");
-            link.ToHtmlString().Should().Contain("href=\"" + href + "\"");
+            link.ToHtmlString().Should().MatchRegex("href=\".+/" + actionName + "\"");
             link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
 
             foreach (var attribute in hAttributes)
