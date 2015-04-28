@@ -91,7 +91,9 @@ namespace Aliencube.HtmlHelper.Extended.Tests
                 request.AppRelativeCurrentExecutionFilePath.Returns(requestPath);
             }
 
-            var url = String.Format("{0}://localhost", protocol) + (port.GetValueOrDefault(0) > 0 ? String.Format(":{0}", port) : null);
+            var url = String.Format("{0}://localhost{1}",
+                                    protocol,
+                                    (port.GetValueOrDefault() > 0 ? String.Format(":{0}", port) : null));
             var uri = new Uri(url);
             request.Url.Returns(uri);
             request.PathInfo.Returns(String.Empty);
@@ -107,7 +109,8 @@ namespace Aliencube.HtmlHelper.Extended.Tests
             context.Session.Returns((HttpSessionStateBase)null);
 
             var response = Substitute.For<HttpResponseBase>();
-            response.ApplyAppPathModifier(Arg.Any<string>()).Returns(p => String.Format("{0}{1}", APP_PATH_MODIFIER, p.Arg<string>()));
+            response.ApplyAppPathModifier(Arg.Any<string>())
+                    .Returns(p => String.Format("{0}{1}", APP_PATH_MODIFIER, p.Arg<string>()));
 
             context.Response.Returns(response);
 
