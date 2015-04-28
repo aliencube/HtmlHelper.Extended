@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>Aliencube.HtmlHelper.Extended</id>
+        <version>1.0.0.0</version>
+        <title>HtmlHelper.Extended</title>
+        <authors>Aliencube Community</authors>
+        <owners>aliencube</owners>
+        <licenseUrl>https://github.com/aliencube/HtmlHelper.Extended/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/aliencube/HtmlHelper.Extended</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>HtmlHelper.Extended provides several useful extension methods used in ASP.NET MVC razor scripts.</description>
+        <copyright>Aliencube Community Copyright 2015</copyright>
+        <tags>Aliencube, HtmlHelper, MVC, Razor</tags>
+        <dependencies>
+            <dependency id="Microsoft.AspNet.Mvc" version="5.0.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\**\Aliencube.HtmlHelper.Extended.*" target="lib" />
+    </files>
+</package>
