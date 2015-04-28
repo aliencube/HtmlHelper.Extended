@@ -17,27 +17,45 @@ TBD
 **HtmlHelper Extended** provides three basic HTML controls to be used in Razor scripts.
 
 
-### `HtmlHelper.Link(linkText, href, htmlAttributes)` ###
+### `HtmlHelper.Link()` ###
+
+`@Html.Link()` method has the following variations:
 
 ```csharp
+@Html.Link("Link Text", "http://link.url");
 @Html.Link("Link Text", "http://link.url", new { title = "Link Title" });
+@Html.Link("Link Text", "http://link.url", new Dictionary<string, object> () { { "title", "Link Title" } });
 ```
 
 
 ### `HtmlHelper.Image(src, imageAttributes)` ###
 
+`@Html.Image()` method has the following variations:
+
 ```csharp
+@Html.Image("http://image.source");
 @Html.Image("http://image.source", new { alt = "Alternative Text" });
+@Html.Image("http://image.source", new Dictionary<string, object>() { { "alt", "Alternative Text" } });
 ```
 
 
 ### `HtmlHelper.ImageActionLink(src, actionName, htmlAttributes, imageAttributes)` ###
 
+`@Html.ImageActionLink()` method has the following variations:
+
 ```csharp
+@Html.ImageActionLink("http://image.source", "Action Method Name");
+@Html.ImageActionLink("http://image.source", "Action Method Name", new { title = "Link Title" });
 @Html.ImageActionLink("http://image.source", "Action Method Name", new { title = "Link Title" }, new { border = 0 });
+@Html.ImageActionLink("http://image.source", "Action Method Name", new { id = 1 }, new { title = "Link Title" }, new { border = 0 });
+
+@Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name");
+@Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { title = "Link Title" });
+@Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { title = "Link Title" }, new { border = 0 });
+@Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { id = 1 }, new { title = "Link Title" }, new { border = 0 });
 ```
 
-Need more? Please contribute! :-)
+And more...
 
 
 ## Contribution ##
