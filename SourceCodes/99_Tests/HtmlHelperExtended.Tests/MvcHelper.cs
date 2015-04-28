@@ -3,79 +3,118 @@ using System.Collections;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Moq;
+using NSubstitute;
 
 namespace Aliencube.HtmlHelper.Extended.Tests
 {
+    /// <summary>
+    /// This represents the helper entity for <c>HtmlHelper</c>.
+    /// </summary>
     public static class MvcHelper
     {
-        public const string AppPathModifier = "/$(SESSION)";
+        private const string APP_PATH_MODIFIER = "/$(SESSION)";
 
-        public static HtmlHelper<object> GetHtmlHelper()
+        /// <summary>
+        /// Gets the fake <c>HtmlHelper</c> instance.
+        /// </summary>
+        /// <param name="appPath">Application path.</param>
+        /// <param name="requestPath">Request path.</param>
+        /// <param name="httpMethod">HTTP method.</param>
+        /// <param name="protocol">Protocol.</param>
+        /// <param name="port">Port number.</param>
+        /// <returns>Returns the fake <c>HtmlHelper</c> instance.</returns>
+        public static HtmlHelper<object> GetHtmlHelper(string appPath = null, string requestPath = null, string httpMethod = null, string protocol = null, int? port = null)
         {
-            HttpContextBase httpcontext = GetHttpContext("/app/", null, null);
-            RouteCollection rt = new RouteCollection();
-            rt.Add(new Route("{controller}/{action}/{id}", null) { Defaults = new RouteValueDictionary(new { id = "defaultid" }) });
-            rt.Add("namedroute", new Route("named/{controller}/{action}/{id}", null) { Defaults = new RouteValueDictionary(new { id = "defaultid" }) });
-            RouteData rd = new RouteData();
-            rd.Values.Add("controller", "home");
-            rd.Values.Add("action", "oldaction");
-
-            ViewDataDictionary vdd = new ViewDataDictionary();
-
-            ViewContext viewContext = new ViewContext()
+            if (String.IsNullOrWhiteSpace(appPath))
             {
-                HttpContext = httpcontext,
-                RouteData = rd,
-                ViewData = vdd
-            };
-            Mock<IViewDataContainer> mockVdc = new Mock<IViewDataContainer>();
-            mockVdc.Setup(vdc => vdc.ViewData).Returns(vdd);
+                appPath = "/";
+            }
 
-            HtmlHelper<object> htmlHelper = new HtmlHelper<object>(viewContext, mockVdc.Object, rt);
+            if (String.IsNullOrWhiteSpace(protocol))
+            {
+                protocol = Uri.UriSchemeHttp;
+            }
+
+            if (port.GetValueOrDefault() <= 0)
+            {
+                port = 80;
+            }
+
+            var httpContext = GetHttpContext(appPath, requestPath, httpMethod, protocol, port);
+
+            var routeCollection = new RouteCollection();
+            var route = new Route("{controller}/{action}/{id}", null)
+                        {
+                            Defaults = new RouteValueDictionary(new { id = UrlParameter.Optional }),
+                        };
+            routeCollection.Add(route);
+
+            var routeData = new RouteData();
+            routeData.Values.Add("controller", "home");
+            routeData.Values.Add("action", "index");
+
+            var viewDataDictionary = new ViewDataDictionary();
+            var viewContext = new ViewContext()
+                              {
+                                  HttpContext = httpContext,
+                                  RouteData = routeData,
+                                  ViewData = viewDataDictionary,
+                              };
+
+            var viewDataContainer = Substitute.For<IViewDataContainer>();
+            viewDataContainer.ViewData.Returns(viewDataDictionary);
+
+            var htmlHelper = new HtmlHelper<object>(viewContext, viewDataContainer, routeCollection);
             return htmlHelper;
         }
 
-        public static HttpContextBase GetHttpContext(string appPath, string requestPath, string httpMethod)
+        /// <summary>
+        /// Gets the fake <c>HttpContextBase</c> instance.
+        /// </summary>
+        /// <param name="appPath">Application path.</param>
+        /// <param name="requestPath">Request path.</param>
+        /// <param name="httpMethod">HTTP method.</param>
+        /// <param name="protocol">Protocol.</param>
+        /// <param name="port">Port number.</param>
+        /// <returns>Returns the fake <c>HttpContextBase</c> instance.</returns>
+        public static HttpContextBase GetHttpContext(string appPath = null, string requestPath = null, string httpMethod = null, string protocol = null, int? port = null)
         {
-            return GetHttpContext(appPath, requestPath, httpMethod, Uri.UriSchemeHttp.ToString(), -1);
-        }
-        public static HttpContextBase GetHttpContext(string appPath, string requestPath, string httpMethod, string protocol, int port)
-        {
-            Mock<HttpContextBase> mockHttpContext = new Mock<HttpContextBase>();
-
-            if (!String.IsNullOrEmpty(appPath))
+            var request = Substitute.For<HttpRequestBase>();
+            if (!String.IsNullOrWhiteSpace(appPath))
             {
-                mockHttpContext.Setup(o => o.Request.ApplicationPath).Returns(appPath);
-                mockHttpContext.Setup(o => o.Request.RawUrl).Returns(appPath);
-            }
-            if (!String.IsNullOrEmpty(requestPath))
-            {
-                mockHttpContext.Setup(o => o.Request.AppRelativeCurrentExecutionFilePath).Returns(requestPath);
+                request.ApplicationPath.Returns(appPath);
+                request.RawUrl.Returns(appPath);
             }
 
-            Uri uri;
-
-            if (port >= 0)
+            if (!String.IsNullOrWhiteSpace(requestPath))
             {
-                uri = new Uri(protocol + "://localhost" + ":" + Convert.ToString(port));
-            }
-            else
-            {
-                uri = new Uri(protocol + "://localhost");
-            }
-            mockHttpContext.Setup(o => o.Request.Url).Returns(uri);
-
-            mockHttpContext.Setup(o => o.Request.PathInfo).Returns(String.Empty);
-            if (!String.IsNullOrEmpty(httpMethod))
-            {
-                mockHttpContext.Setup(o => o.Request.HttpMethod).Returns(httpMethod);
+                request.AppRelativeCurrentExecutionFilePath.Returns(requestPath);
             }
 
-            mockHttpContext.Setup(o => o.Session).Returns((HttpSessionStateBase)null);
-            mockHttpContext.Setup(o => o.Response.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(r => AppPathModifier + r);
-            mockHttpContext.Setup(o => o.Items).Returns(new Hashtable());
-            return mockHttpContext.Object;
+            var url = String.Format("{0}://localhost", protocol) + (port.GetValueOrDefault(0) > 0 ? String.Format(":{0}", port) : null);
+            var uri = new Uri(url);
+            request.Url.Returns(uri);
+            request.PathInfo.Returns(String.Empty);
+
+            if (!String.IsNullOrWhiteSpace(httpMethod))
+            {
+                request.HttpMethod.Returns(httpMethod);
+            }
+
+            var context = Substitute.For<HttpContextBase>();
+            context.Request.Returns(request);
+
+            context.Session.Returns((HttpSessionStateBase)null);
+
+            var response = Substitute.For<HttpResponseBase>();
+            response.ApplyAppPathModifier(Arg.Any<string>()).Returns(p => String.Format("{0}{1}", APP_PATH_MODIFIER, p.Arg<string>()));
+
+            context.Response.Returns(response);
+
+            var items = new Hashtable();
+            context.Items.Returns(items);
+
+            return context;
         }
     }
 }
