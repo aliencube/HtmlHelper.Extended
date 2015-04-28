@@ -5,11 +5,16 @@
 
 ## Package Status ##
 
-TBD
+| **HtmlHelper Extended** |
+|:-----------------------:|
+| [![](https://img.shields.io/nuget/v/Aliencube.HtmlHelper.Extended.svg)](https://www.nuget.org/packages/Aliencube.HtmlHelper.Extended/) [![](https://img.shields.io/nuget/dt/Aliencube.HtmlHelper.Extended.svg)](https://www.nuget.org/packages/Aliencube.HtmlHelper.Extended/) |
+
 
 ## Build Status ##
 
-TBD
+| `master` | `dev` | `release` |
+|:--------:|:-----:|:---------:|
+| [![Build status](https://ci.appveyor.com/api/projects/status/fk763fdpdri4h8m8/branch/master?svg=true)](https://ci.appveyor.com/project/justinyoo/htmlhelper-extended/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/fk763fdpdri4h8m8/branch/dev?svg=true)](https://ci.appveyor.com/project/justinyoo/htmlhelper-extended/branch/dev) | [![Build status](https://ci.appveyor.com/api/projects/status/fk763fdpdri4h8m8/branch/release?svg=true)](https://ci.appveyor.com/project/justinyoo/htmlhelper-extended/branch/release) |
 
 
 ## Getting Started ##
@@ -28,7 +33,7 @@ TBD
 ```
 
 
-### `HtmlHelper.Image(src, imageAttributes)` ###
+### `HtmlHelper.Image()` ###
 
 `@Html.Image()` method has the following variations:
 
@@ -39,7 +44,7 @@ TBD
 ```
 
 
-### `HtmlHelper.ImageActionLink(src, actionName, htmlAttributes, imageAttributes)` ###
+### `HtmlHelper.ImageActionLink()` ###
 
 `@Html.ImageActionLink()` method has the following variations:
 
