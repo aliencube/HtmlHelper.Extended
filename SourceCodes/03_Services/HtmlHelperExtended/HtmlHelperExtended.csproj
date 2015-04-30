@@ -71,7 +71,9 @@
     <Compile Include="..\..\..\Documents\Properties\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="HtmlHelperImageLinkExtensions.cs" />
     <Compile Include="HtmlHelperLinkExtensions.cs" />
+    <Compile Include="PropertyHelper.cs" />
     <Compile Include="TagBuilderExtensions.cs" />
     <Compile Include="HtmlHelperImageExtensions.cs" />
     <Compile Include="HtmlHelperImageActionLinkExtensions.cs" />

@@ -10,13 +10,13 @@ namespace Aliencube.HtmlHelper.Extended
     public static class HtmlHelperLinkExtensions
     {
         /// <summary>
-        /// Renders the anchor tag.
+        /// Renders the &lt;a&gt; tag.
         /// </summary>
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
-        /// <param name="linkText">Image file location.</param>
-        /// <param name="href">MVC action name.</param>
+        /// <param name="linkText">Link text.</param>
+        /// <param name="href">Link URL.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
-        /// <returns>Returns the anchor tag.</returns>
+        /// <returns>Returns the &lt;a&gt; tag.</returns>
         public static MvcHtmlString Link(this System.Web.Mvc.HtmlHelper htmlHelper, string linkText, string href, object htmlAttributes = null)
         {
             if (String.IsNullOrWhiteSpace(linkText))
@@ -29,17 +29,17 @@ namespace Aliencube.HtmlHelper.Extended
                 throw new ArgumentNullException("href");
             }
 
-            return Link(htmlHelper, linkText, href, System.Web.Mvc.HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+            return Link(htmlHelper, linkText, href, PropertyHelper.ConvertAnonymousObjectToDictionary(htmlAttributes));
         }
 
         /// <summary>
-        /// Renders the anchor tag.
+        /// Renders the &lt;a&gt; tag.
         /// </summary>
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
-        /// <param name="linkText">Image file location.</param>
-        /// <param name="href">MVC action name.</param>
+        /// <param name="linkText">Link text.</param>
+        /// <param name="href">Link URL.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
-        /// <returns>Returns the anchor tag.</returns>
+        /// <returns>Returns the &lt;a&gt; tag.</returns>
         public static MvcHtmlString Link(this System.Web.Mvc.HtmlHelper htmlHelper, string linkText, string href, IDictionary<string, object> htmlAttributes = null)
         {
             if (String.IsNullOrWhiteSpace(linkText))

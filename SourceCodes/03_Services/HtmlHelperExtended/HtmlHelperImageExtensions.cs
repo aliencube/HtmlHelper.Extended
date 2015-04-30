@@ -14,7 +14,7 @@ namespace Aliencube.HtmlHelper.Extended
         /// </summary>
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
-        /// <param name="imageAttributes">List of attributes for the &lt;img&gt; tag.</param>
+        /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;img&gt; tag in HTML format.</returns>
         public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, object imageAttributes = null)
         {
@@ -31,7 +31,7 @@ namespace Aliencube.HtmlHelper.Extended
         /// </summary>
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
-        /// <param name="imageAttributes">List of attributes for the &lt;img&gt; tag.</param>
+        /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;img&gt; tag in HTML format.</returns>
         public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, IDictionary<string, object> imageAttributes = null)
         {
