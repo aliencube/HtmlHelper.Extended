@@ -29,7 +29,13 @@
 ```csharp
 @Html.Link("Link Text", "http://link.url");
 @Html.Link("Link Text", "http://link.url", new { title = "Link Title" });
-@Html.Link("Link Text", "http://link.url", new Dictionary<string, object> () { { "title", "Link Title" } });
+```
+
+The result will be:
+
+```html
+<a href="http://link.url">Link Text</a>
+<a href="http://link.url" title="Link Title">Link Text</a>
 ```
 
 
@@ -40,7 +46,30 @@
 ```csharp
 @Html.Image("http://image.source");
 @Html.Image("http://image.source", new { alt = "Alternative Text" });
-@Html.Image("http://image.source", new Dictionary<string, object>() { { "alt", "Alternative Text" } });
+```
+
+The result will be:
+
+```html
+<img src="http://image.source" />
+<img src="http://image.source" alt="Alternative Text" />
+```
+
+
+### `HtmlHelper.ImageLink()` ###
+
+`@Html.ImageLink()` method has the following variations:
+
+```csharp
+@Html.ImageLink("http://image.source", "http://link.url");
+@Html.ImageLink("http://image.source", "http://link.url", new { title = "Link TItle" }, new { border = 0 });
+```
+
+The result will be:
+
+```html
+<a href="http://link.url"><img src="http://image.source" /></a>
+<a href="http://link.url" title="Link Title"><img src="http://image.source" border="0" /></a>
 ```
 
 
@@ -58,6 +87,20 @@
 @Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { title = "Link Title" });
 @Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { title = "Link Title" }, new { border = 0 });
 @Html.ImageActionLink("http://image.source", "Action Method Name", "Controller Name", new { id = 1 }, new { title = "Link Title" }, new { border = 0 });
+```
+
+The result will be:
+
+```html
+<a href="/home/action"><img src="http://image.source" /></a>
+<a href="/home/action" title="Link Title"><img src="http://image.source" /></a>
+<a href="/home/action" title="Link Title"><img src="http://image.source" border="0" /></a>
+<a href="/home/action/1" title="Link Title"><img src="http://image.source" border="0" /></a>
+
+<a href="/controller/action"><img src="http://image.source" /></a>
+<a href="/controller/action title="Link Title"><img src="http://image.source" /></a>
+<a href="/controller/action title="Link Title"><img src="http://image.source" border="0" /></a>
+<a href="/controller/action/1 title="Link Title"><img src="http://image.source" border="0" /></a>
 ```
 
 And more...
