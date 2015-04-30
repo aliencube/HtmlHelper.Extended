@@ -98,9 +98,9 @@ The result will be:
 <a href="/home/action/1" title="Link Title"><img src="http://image.source" border="0" /></a>
 
 <a href="/controller/action"><img src="http://image.source" /></a>
-<a href="/controller/action title="Link Title"><img src="http://image.source" /></a>
-<a href="/controller/action title="Link Title"><img src="http://image.source" border="0" /></a>
-<a href="/controller/action/1 title="Link Title"><img src="http://image.source" border="0" /></a>
+<a href="/controller/action" title="Link Title"><img src="http://image.source" /></a>
+<a href="/controller/action" title="Link Title"><img src="http://image.source" border="0" /></a>
+<a href="/controller/action/1" title="Link Title"><img src="http://image.source" border="0" /></a>
 ```
 
 And more...
