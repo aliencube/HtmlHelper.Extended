@@ -29,7 +29,7 @@ namespace Aliencube.HtmlHelper.Extended
                 throw new ArgumentNullException("href");
             }
 
-            return Link(htmlHelper, linkText, href, PropertyHelper.ConvertAnonymousObjectToDictionary(htmlAttributes));
+            return Link(htmlHelper, linkText, href, System.Web.Mvc.HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         /// <summary>
