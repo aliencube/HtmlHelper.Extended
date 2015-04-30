@@ -33,7 +33,7 @@ namespace Aliencube.HtmlHelper.Extended
                 throw new ArgumentNullException("actionName");
             }
 
-            return ImageActionLink(htmlHelper, src, actionName, null, PropertyHelper.ConvertAnonymousObjectToDictionary(routeValues), PropertyHelper.ConvertAnonymousObjectToDictionary(htmlAttributes), PropertyHelper.ConvertAnonymousObjectToDictionary(imageAttributes));
+            return ImageActionLink(htmlHelper, src, actionName, null, routeValues, htmlAttributes, imageAttributes);
         }
 
         /// <summary>
@@ -84,7 +84,9 @@ namespace Aliencube.HtmlHelper.Extended
                 throw new ArgumentNullException("actionName");
             }
 
-            return ImageActionLink(htmlHelper, src, actionName, controllerName, PropertyHelper.ConvertAnonymousObjectToDictionary(routeValues), PropertyHelper.ConvertAnonymousObjectToDictionary(htmlAttributes), PropertyHelper.ConvertAnonymousObjectToDictionary(imageAttributes));
+            var actionLink = htmlHelper.ActionLink(".", actionName, controllerName, routeValues, htmlAttributes);
+            var image = htmlHelper.Image(src, imageAttributes);
+            return new MvcHtmlString(actionLink.ToHtmlString().Replace(">.</a>", ">" + image.ToHtmlString() + "</a>"));
         }
 
         /// <summary>
@@ -156,7 +158,9 @@ namespace Aliencube.HtmlHelper.Extended
                 throw new ArgumentNullException("fragment");
             }
 
-            return ImageActionLink(htmlHelper, src, actionName, controllerName, protocol, hostName, fragment, PropertyHelper.ConvertAnonymousObjectToDictionary(routeValues), PropertyHelper.ConvertAnonymousObjectToDictionary(htmlAttributes), PropertyHelper.ConvertAnonymousObjectToDictionary(imageAttributes));
+            var actionLink = htmlHelper.ActionLink(".", actionName, controllerName, protocol, hostName, fragment, routeValues, htmlAttributes);
+            var image = htmlHelper.Image(src, imageAttributes);
+            return new MvcHtmlString(actionLink.ToHtmlString().Replace(">.</a>", ">" + image.ToHtmlString() + "</a>"));
         }
 
         /// <summary>
