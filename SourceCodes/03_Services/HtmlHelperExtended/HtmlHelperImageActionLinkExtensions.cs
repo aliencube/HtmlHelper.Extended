@@ -16,11 +16,80 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
         /// <param name="actionName">MVC action name.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
+        /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, object htmlAttributes, object imageAttributes)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, null, null, htmlAttributes, imageAttributes);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="routeValues">List of the route values.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, object routeValues)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, null, routeValues, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
         /// <param name="routeValues">List of the route values.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
         /// <returns>Returns the action link containing image.</returns>
-        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, object routeValues = null, object htmlAttributes = null, object imageAttributes = null)
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, object routeValues, object htmlAttributes, object imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
@@ -41,11 +110,58 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
         /// <param name="actionName">MVC action name.</param>
+        /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
+        /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, IDictionary<string, object> htmlAttributes, IDictionary<string, object> imageAttributes)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, null, null, htmlAttributes, imageAttributes);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="routeValues">List of the route values.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, IDictionary<string, object> routeValues)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, null, routeValues, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
         /// <param name="routeValues">List of the route values.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
         /// <returns>Returns the action link containing image.</returns>
-        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, IDictionary<string, object> routeValues = null, IDictionary<string, object> htmlAttributes = null, IDictionary<string, object> imageAttributes = null)
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, IDictionary<string, object> routeValues, IDictionary<string, object> htmlAttributes, IDictionary<string, object> imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
@@ -67,11 +183,83 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="src">Image file location.</param>
         /// <param name="actionName">MVC action name.</param>
         /// <param name="controllerName">MVC controller name.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, controllerName, null, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="controllerName">MVC controller name.</param>
+        /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
+        /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, object htmlAttributes, object imageAttributes)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, controllerName, null, htmlAttributes, imageAttributes);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="controllerName">MVC controller name.</param>
+        /// <param name="routeValues">List of the route values.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, object routeValues)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, controllerName, routeValues, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="controllerName">MVC controller name.</param>
         /// <param name="routeValues">List of the route values.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
         /// <returns>Returns the action link containing image.</returns>
-        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, object routeValues = null, object htmlAttributes = null, object imageAttributes = null)
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, object routeValues, object htmlAttributes, object imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
@@ -95,11 +283,60 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="src">Image file location.</param>
         /// <param name="actionName">MVC action name.</param>
         /// <param name="controllerName">MVC controller name.</param>
+        /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
+        /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, IDictionary<string, object> htmlAttributes, IDictionary<string, object> imageAttributes)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, controllerName, null, htmlAttributes, imageAttributes);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="controllerName">MVC controller name.</param>
+        /// <param name="routeValues">List of the route values.</param>
+        /// <returns>Returns the action link containing image.</returns>
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, IDictionary<string, object> routeValues)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(actionName))
+            {
+                throw new ArgumentNullException("actionName");
+            }
+
+            return ImageActionLink(htmlHelper, src, actionName, controllerName, routeValues, null, null);
+        }
+
+        /// <summary>
+        /// Renders the action link containing image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="actionName">MVC action name.</param>
+        /// <param name="controllerName">MVC controller name.</param>
         /// <param name="routeValues">List of the route values.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes used for the {img} tag.</param>
         /// <returns>Returns the action link containing image.</returns>
-        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, IDictionary<string, object> routeValues = null, IDictionary<string, object> htmlAttributes = null, IDictionary<string, object> imageAttributes = null)
+        public static MvcHtmlString ImageActionLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string actionName, string controllerName, IDictionary<string, object> routeValues, IDictionary<string, object> htmlAttributes, IDictionary<string, object> imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {

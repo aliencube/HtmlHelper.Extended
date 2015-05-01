@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Aliencube.HtmlHelper.Extended.Tests
 {
-    using System.Linq;
-
-    using NUnit.Framework.Constraints;
-
     [TestFixture]
     public class HtmlHelperImageActionLinkExtensionsTest
     {
@@ -27,58 +22,157 @@ namespace Aliencube.HtmlHelper.Extended.Tests
         }
 
         [Test]
-        [TestCase("http://google.com", "TestAction", null, null, null, null)]
-        [TestCase("http://google.com", "TestAction", null, "id=1", null, null)]
-        [TestCase("http://google.com", "TestAction", null, null, "title=TestTitle", null)]
-        [TestCase("http://google.com", "TestAction", null, null, null, "border=0")]
-        [TestCase("http://google.com", "TestAction", null, "id=1", "title=TestTitle", null)]
-        [TestCase("http://google.com", "TestAction", null, "id=1", null, "border=0")]
-        [TestCase("http://google.com", "TestAction", null, null, "title=TestTitle", "border=0")]
-        [TestCase("http://google.com", "TestAction", null, "id=1", "title=TestTitle", "border=0")]
-        [TestCase("http://google.com", "TestAction", "TestController", null, null, null)]
-        [TestCase("http://google.com", "TestAction", "TestController", "id=1", null, null)]
-        [TestCase("http://google.com", "TestAction", "TestController", null, "title=TestTitle", null)]
-        [TestCase("http://google.com", "TestAction", "TestController", null, null, "border=0")]
-        [TestCase("http://google.com", "TestAction", "TestController", "id=1", "title=TestTitle", null)]
-        [TestCase("http://google.com", "TestAction", "TestController", "id=1", null, "border=0")]
-        [TestCase("http://google.com", "TestAction", "TestController", null, "title=TestTitle", "border=0")]
-        [TestCase("http://google.com", "TestAction", "TestController", "id=1", "title=TestTitle", "border=0")]
-        public void GivenSrcHrefAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, string controllerName, string routeValues, string htmlAttributes, string imageAttributes)
+        [TestCase("http://google.com", "TestAction")]
+        public void GivenSrcAndActionName_Should_ReturnHtmlTagString(string src, string actionName)
         {
-            var rValues = new { id = !String.IsNullOrWhiteSpace(routeValues) ? routeValues.Split('=')[1] : null };
-            var hAttributes = new { title = !String.IsNullOrWhiteSpace(htmlAttributes) ? htmlAttributes.Split('=')[1] : null };
-            var iAttributes = new { border = !String.IsNullOrWhiteSpace(imageAttributes) ? imageAttributes.Split('=')[1] : null };
+            var link = this._htmlHelper.ImageActionLink(src, actionName);
 
-            var link = String.IsNullOrWhiteSpace(controllerName)
-                           ? this._htmlHelper.ImageActionLink(src, actionName, rValues, hAttributes, iAttributes)
-                           : this._htmlHelper.ImageActionLink(src, actionName, controllerName, rValues, hAttributes, iAttributes);
-
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "\"");
             link.ToHtmlString().Should().Contain("><img");
-            if (!String.IsNullOrWhiteSpace(controllerName))
-            {
-                if (!String.IsNullOrWhiteSpace(routeValues))
-                {
-                    link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "/" + rValues.id + "\"");
-                }
-                else
-                {
-                    link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "\"");
-                }
-            }
-            else
-            {
-                if (!String.IsNullOrWhiteSpace(routeValues))
-                {
-                    link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "/" + rValues.id + "\"");
-                }
-                else
-                {
-                    link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "\"");
-                }
-            }
             link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
-            link.ToHtmlString().Should().Contain("title=\"" + hAttributes.title + "\"");
-            link.ToHtmlString().Should().Contain("border=\"" + iAttributes.border + "\"");
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", "TestTitle", null)]
+        [TestCase("http://google.com", "TestAction", null, "class1 class2")]
+        [TestCase("http://google.com", "TestAction", "TestTitle", "class1 class2")]
+        public void GivenSrcActionNameAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, string title, string @class)
+        {
+            var htmlAttributes = String.IsNullOrWhiteSpace(title) ? null : new { title = title };
+            var imageAttributes = String.IsNullOrWhiteSpace(@class) ? null : new { @class = @class };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, htmlAttributes, imageAttributes);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+
+            if (htmlAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("title=\"" + htmlAttributes.title + "\"");
+            }
+
+            if (imageAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("class=\"" + imageAttributes.@class + "\"");
+            }
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", 1)]
+        public void GivenSrcActionNameAndRouteValues_Should_ReturnHtmlTagString(string src, string actionName, int id)
+        {
+            var routeValues = new { id = id };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, routeValues);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "/" + id + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", 1, "TestTitle", null)]
+        [TestCase("http://google.com", "TestAction", 1, null, "class1 class2")]
+        [TestCase("http://google.com", "TestAction", 1, "TestTitle", "class1 class2")]
+        public void GivenSrcActionNameRouteValuesAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, int id, string title, string @class)
+        {
+            var routeValues = new { id = id };
+            var htmlAttributes = String.IsNullOrWhiteSpace(title) ? null : new { title = title };
+            var imageAttributes = String.IsNullOrWhiteSpace(@class) ? null : new { @class = @class };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, routeValues, htmlAttributes, imageAttributes);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/home/" + actionName + "/" + id + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+
+            if (htmlAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("title=\"" + htmlAttributes.title + "\"");
+            }
+
+            if (imageAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("class=\"" + imageAttributes.@class + "\"");
+            }
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", "TestController")]
+        public void GivenSrcActionNameAndController_Should_ReturnHtmlTagString(string src, string actionName, string controllerName)
+        {
+            var link = this._htmlHelper.ImageActionLink(src, actionName, controllerName);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", "TestController", "TestTitle", null)]
+        [TestCase("http://google.com", "TestAction", "TestController", null, "class1 class2")]
+        [TestCase("http://google.com", "TestAction", "TestController", "TestTitle", "class1 class2")]
+        public void GivenSrcActionNameControllerAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, string controllerName, string title, string @class)
+        {
+            var htmlAttributes = String.IsNullOrWhiteSpace(title) ? null : new { title = title };
+            var imageAttributes = String.IsNullOrWhiteSpace(@class) ? null : new { @class = @class };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, controllerName, htmlAttributes, imageAttributes);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+
+            if (htmlAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("title=\"" + htmlAttributes.title + "\"");
+            }
+
+            if (imageAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("class=\"" + imageAttributes.@class + "\"");
+            }
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", "TestController", 1)]
+        public void GivenSrcActionNameControllerNameAndRouteValues_Should_ReturnHtmlTagString(string src, string actionName, string controllerName, int id)
+        {
+            var routeValues = new { id = id };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, controllerName, routeValues);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "/" + Convert.ToString(id) + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestAction", "TestController", 1, "TestTitle", null)]
+        [TestCase("http://google.com", "TestAction", "TestController", 1, null, "class1 class2")]
+        [TestCase("http://google.com", "TestAction", "TestController", 1, "TestTitle", "class1 class2")]
+        public void GivenSrcActionNameControllerNameRouteValuesAndAttributes_Should_ReturnHtmlTagString(string src, string actionName, string controllerName, int id, string title, string @class)
+        {
+            var routeValues = new { id = id };
+            var htmlAttributes = String.IsNullOrWhiteSpace(title) ? null : new { title = title };
+            var imageAttributes = String.IsNullOrWhiteSpace(@class) ? null : new { @class = @class };
+
+            var link = this._htmlHelper.ImageActionLink(src, actionName, controllerName, routeValues, htmlAttributes, imageAttributes);
+
+            link.ToHtmlString().Should().Contain("href=\"" + MvcHelper.APP_PATH_MODIFIER + "/" + controllerName + "/" + actionName + "/" + Convert.ToString(id) + "\"");
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+
+            if (htmlAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("title=\"" + htmlAttributes.title + "\"");
+            }
+
+            if (imageAttributes != null)
+            {
+                link.ToHtmlString().Should().Contain("class=\"" + imageAttributes.@class + "\"");
+            }
         }
     }
 }
