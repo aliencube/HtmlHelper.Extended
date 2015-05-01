@@ -28,29 +28,25 @@ namespace Aliencube.HtmlHelper.Extended.Tests
 
         [Test]
         [TestCase("Test Link Text", "http://google.com")]
-        [TestCase("Test Link Text", "http://google.com", "title=TestTitle", "class=class1 class2")]
-        public void GivenLinkTextHrefAndAttributes_Should_ReturnHtmlTagString(string linkText, string href, params string[] htmlAttributes)
+        public void GivenLinkTextAndHref_Should_ReturnHtmlTagString(string linkText, string href)
         {
-            Dictionary<string, object> attributes = null;
-            if (htmlAttributes != null)
-            {
-                attributes = htmlAttributes.Select(htmlAttribute => htmlAttribute.Split('='))
-                                           .ToDictionary<string[], string, object>(segments => segments[0], segments => segments[1]);
-            }
+            var link = this._htmlHelper.Link(linkText, href);
+
+            link.ToHtmlString().Should().Contain(">" + linkText + "</a>");
+            link.ToHtmlString().Should().Contain("href=\"" + href + "\"");
+        }
+
+        [Test]
+        [TestCase("Test Link Text", "http://google.com", "TestTitle", "class1 class2")]
+        public void GivenLinkTextHrefAndAttributes_Should_ReturnHtmlTagString(string linkText, string href, string title, string @class)
+        {
+            var attributes = new { title = title, @class = @class };
             var link = this._htmlHelper.Link(linkText, href, attributes);
 
             link.ToHtmlString().Should().Contain(">" + linkText + "</a>");
             link.ToHtmlString().Should().Contain("href=\"" + href + "\"");
-
-            if (attributes == null)
-            {
-                return;
-            }
-
-            foreach (var attribute in attributes)
-            {
-                link.ToHtmlString().Should().Contain(attribute.Key + "=\"" + attribute.Value + "\"");
-            }
+            link.ToHtmlString().Should().Contain("title=\"" + title + "\"");
+            link.ToHtmlString().Should().Contain("class=\"" + @class + "\"");
         }
     }
 }
