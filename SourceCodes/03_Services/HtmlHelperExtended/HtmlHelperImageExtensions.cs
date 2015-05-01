@@ -14,9 +14,25 @@ namespace Aliencube.HtmlHelper.Extended
         /// </summary>
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
+        /// <returns>Returns the &lt;img&gt; tag in HTML format.</returns>
+        public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            return Image(htmlHelper, src, null);
+        }
+
+        /// <summary>
+        /// Renders the &lt;img&gt; tag.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
         /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;img&gt; tag in HTML format.</returns>
-        public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, object imageAttributes = null)
+        public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, object imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
@@ -33,7 +49,7 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="src">Image file location.</param>
         /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;img&gt; tag in HTML format.</returns>
-        public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, IDictionary<string, object> imageAttributes = null)
+        public static MvcHtmlString Image(this System.Web.Mvc.HtmlHelper htmlHelper, string src, IDictionary<string, object> imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
