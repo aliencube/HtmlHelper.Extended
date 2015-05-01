@@ -27,37 +27,38 @@ namespace Aliencube.HtmlHelper.Extended.Tests
         }
 
         [Test]
-        [TestCase("http://flickr.com", "http://google.com", null, null)]
-        [TestCase("http://flickr.com", "http://google.com", "title=TestTitle", null)]
-        [TestCase("http://flickr.com", "http://google.com", null, "border=0")]
-        [TestCase("http://flickr.com", "http://google.com", "title=TestTitle", "border=0")]
-        public void GivenSrcHrefAndAttributes_Should_ReturnHtmlTagString(string src, string href, string htmlAttributes, string imageAttributes)
+        [TestCase("http://flickr.com", "http://google.com")]
+        public void GivenSrcAndHref_Should_ReturnHtmlTagString(string src, string href)
         {
-            var hAttributes = new Dictionary<string, object>();
-            if (!String.IsNullOrWhiteSpace(htmlAttributes))
-            {
-                hAttributes.Add(htmlAttributes.Split('=')[0], htmlAttributes.Split('=')[1]);
-            }
+            var link = this._htmlHelper.ImageLink(src, href);
 
-            var iAttributes = new Dictionary<string, object>();
-            if (!String.IsNullOrWhiteSpace(imageAttributes))
-            {
-                iAttributes.Add(imageAttributes.Split('=')[0], imageAttributes.Split('=')[1]);
-            }
-            var link = this._htmlHelper.ImageLink(src, href, hAttributes, iAttributes);
+            link.ToHtmlString().Should().Contain("><img");
+            link.ToHtmlString().Should().MatchRegex("href=\"" + href + "\"");
+            link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+        }
+
+        [Test]
+        [TestCase("http://flickr.com", "http://google.com", "TestTitle", null)]
+        [TestCase("http://flickr.com", "http://google.com", null, 0)]
+        [TestCase("http://flickr.com", "http://google.com", "TestTitle", 0)]
+        public void GivenSrcHrefAndAttributes_Should_ReturnHtmlTagString(string src, string href, string title, int? border)
+        {
+            var htmlAttributes = String.IsNullOrWhiteSpace(title) ? null : new { title = title };
+            var imageAttributes = border == null ? null : new { border = border.Value };
+            var link = this._htmlHelper.ImageLink(src, href, htmlAttributes, imageAttributes);
 
             link.ToHtmlString().Should().Contain("><img");
             link.ToHtmlString().Should().MatchRegex("href=\"" + href + "\"");
             link.ToHtmlString().Should().Contain("src=\"" + src + "\"");
 
-            foreach (var attribute in hAttributes)
+            if (!String.IsNullOrWhiteSpace(title))
             {
-                link.ToHtmlString().Should().Contain(attribute.Key + "=\"" + attribute.Value + "\"");
+                link.ToHtmlString().Should().Contain("title=\"" + title + "\"");
             }
 
-            foreach (var attribute in iAttributes)
+            if (border != null)
             {
-                link.ToHtmlString().Should().Contain(attribute.Key + "=\"" + attribute.Value + "\"");
+                link.ToHtmlString().Should().Contain("border=\"" + border + "\"");
             }
         }
     }

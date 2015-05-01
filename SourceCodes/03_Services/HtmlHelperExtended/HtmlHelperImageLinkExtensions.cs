@@ -15,10 +15,32 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
         /// <param name="src">Image file location.</param>
         /// <param name="href">Link URL.</param>
+        /// <returns>Returns the &lt;a&gt; tag with image.</returns>
+        public static MvcHtmlString ImageLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string href)
+        {
+            if (String.IsNullOrWhiteSpace(src))
+            {
+                throw new ArgumentNullException("src");
+            }
+
+            if (String.IsNullOrWhiteSpace(href))
+            {
+                throw new ArgumentNullException("href");
+            }
+
+            return ImageLink(htmlHelper, src, href, null, null);
+        }
+
+        /// <summary>
+        /// Renders the &lt;a&gt; tag with image.
+        /// </summary>
+        /// <param name="htmlHelper"><c>HtmlHelper</c> instance.</param>
+        /// <param name="src">Image file location.</param>
+        /// <param name="href">Link URL.</param>
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;a&gt; tag with image.</returns>
-        public static MvcHtmlString ImageLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string href, object htmlAttributes = null, object imageAttributes = null)
+        public static MvcHtmlString ImageLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string href, object htmlAttributes, object imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
@@ -42,7 +64,7 @@ namespace Aliencube.HtmlHelper.Extended
         /// <param name="htmlAttributes">List of attributes used for the {a} tag.</param>
         /// <param name="imageAttributes">List of attributes for the {img} tag.</param>
         /// <returns>Returns the &lt;a&gt; tag with image.</returns>
-        public static MvcHtmlString ImageLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string href, IDictionary<string, object> htmlAttributes = null, IDictionary<string, object> imageAttributes = null)
+        public static MvcHtmlString ImageLink(this System.Web.Mvc.HtmlHelper htmlHelper, string src, string href, IDictionary<string, object> htmlAttributes, IDictionary<string, object> imageAttributes)
         {
             if (String.IsNullOrWhiteSpace(src))
             {
