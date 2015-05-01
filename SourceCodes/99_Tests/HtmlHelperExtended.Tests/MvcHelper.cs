@@ -12,7 +12,10 @@ namespace Aliencube.HtmlHelper.Extended.Tests
     /// </summary>
     public static class MvcHelper
     {
-        private const string APP_PATH_MODIFIER = "/$(SESSION)";
+        /// <summary>
+        /// Gets the appPathModifier value.
+        /// </summary>
+        public const string APP_PATH_MODIFIER = "/$(SESSION)";
 
         /// <summary>
         /// Gets the fake <c>HtmlHelper</c> instance.

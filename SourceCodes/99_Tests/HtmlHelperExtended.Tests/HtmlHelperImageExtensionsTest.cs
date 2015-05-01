@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -28,28 +26,23 @@ namespace Aliencube.HtmlHelper.Extended.Tests
 
         [Test]
         [TestCase("http://google.com")]
-        [TestCase("http://google.com", "alt=TestTitle", "class=class1 class2")]
-        public void GivenSrcAndAttributes_Should_ReturnHtmlTagString(string src, params string[] htmlAttributes)
+        public void GivenSrc_Should_ReturnHtmlTagString(string src)
         {
-            Dictionary<string, object> attributes = null;
-            if (htmlAttributes != null)
-            {
-                attributes = htmlAttributes.Select(htmlAttribute => htmlAttribute.Split('='))
-                                           .ToDictionary<string[], string, object>(segments => segments[0], segments => segments[1]);
-            }
+            var image = this._htmlHelper.Image(src);
+
+            image.ToHtmlString().Should().Contain("src=\"" + src + "\"");
+        }
+
+        [Test]
+        [TestCase("http://google.com", "TestTitle", "class1 class2")]
+        public void GivenSrcAndAttributes_Should_ReturnHtmlTagString(string src, string alt, string @class)
+        {
+            var attributes = new { alt = alt, @class = @class };
             var image = this._htmlHelper.Image(src, attributes);
 
             image.ToHtmlString().Should().Contain("src=\"" + src + "\"");
-
-            if (attributes == null)
-            {
-                return;
-            }
-
-            foreach (var attribute in attributes)
-            {
-                image.ToHtmlString().Should().Contain(attribute.Key + "=\"" + attribute.Value + "\"");
-            }
+            image.ToHtmlString().Should().Contain("alt=\"" + alt + "\"");
+            image.ToHtmlString().Should().Contain("class=\"" + @class + "\"");
         }
     }
 }

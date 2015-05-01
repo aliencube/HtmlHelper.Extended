@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="HtmlHelperImageExtensionsTest.cs" />
     <Compile Include="HtmlHelperImageActionLinkExtensionsTest.cs" />
+    <Compile Include="HtmlHelperImageLinkExtensionsTest.cs" />
     <Compile Include="HtmlHelperLinkExtensionsTest.cs" />
     <Compile Include="MvcHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

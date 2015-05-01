@@ -3,12 +3,50 @@
     ViewBag.Title = "Another";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2><code>@@Html.Link()</code></h2>
 
 <div class="row">
-    <ul>
-        <li>@Html.Link("Link Text", "htp://google.com", new { title = "Link Text" })</li>
-        <li>@Html.Image("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", new { alt = "Flickr Image" })</li>
-        <li>@Html.ImageActionLink("http://i0.wp.com/farm8.staticflickr.com/7687/16549846194_9c6d94e8a3_b.jpg?resize=450%2C300", "Index", new { title = "Flickr Image" }, new { width = "150" })</li>
-    </ul>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <pre>@@Html.Link("Google", "http://google.com", new { title = "Google" })
+        </pre>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.Link("Google", "http://google.com", new { title = "Google" })
+    </div>
+</div>
+
+<h2><code>@@Html.Image()</code></h2>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <pre>@@Html.Image("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", new { alt = "Flickr Image", width = 150 })
+        </pre>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.Image("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", new { alt = "Flickr Image", width = 150 })
+    </div>
+</div>
+
+<h2><code>@@Html.ImageLink()</code></h2>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <pre>@@Html.ImageLink("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", "http://flickr.com", new { title = "Flickr Image" }, new { width = 150 })
+        </pre>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.ImageLink("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", "http://flickr.com", new { title = "Flickr Image" }, new { width = 150 })
+    </div>
+</div>
+
+<h2><code>@@Html.ImageActionLink()</code></h2>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <pre>@@Html.ImageActionLink("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", "Index", new { title = "Flickr Image" }, new { width = 150 })
+        </pre>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.ImageActionLink("https://i2.wp.com/farm8.staticflickr.com/7230/14074766243_8c5398c0ec_b.jpg?resize=450%2C300", "Index", new { title = "Flickr Image" }, new { width = 150 })
+    </div>
 </div>
